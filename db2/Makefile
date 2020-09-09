@@ -54,8 +54,8 @@
 # --------------------------------
 # ------ user-defined vars -------
 # --------------------------------
-
-
+CC := gcc
+CFLAGS := -g
 
 # -----------------------
 # ------ make all -------
@@ -67,21 +67,23 @@
 # However, in the final Beagle makefile, you'll see more
 # targets listed. 
 
-
-
+.PHONY : all
+all : app
+	@echo; echo $@ successfully created; echo
 
 
 # -----------------------------------
 # ------ executable rule  -----------
 # -----------------------------------
-
-
+app : app.o
+	$(CC) $(CFLAGS) app.o -o app
 
 
 # ---------------------------------------------------
 # ------ intermeditate object files rule (.o) -------
 # ---------------------------------------------------
-
+app.o : app.c
+	$(CC) $(CFLAGS) -c app.c -o app.o
 
 
 
@@ -94,6 +96,10 @@
 # files).
 
 	
+.PHONY : clean
+clean :
+	rm -rf app
+	rm -rf app.o
 
 
 # -------------------------------------
@@ -106,6 +112,11 @@
 # make sure they are set properly - this helps with 
 # debugging makefile errors.
 
+.PHONY : test
+test :
+	@echo CC = $(CC)
+	@echo CFLAGS = $(CFLAGS)
+	@echo $@ $^
 
 	
 
