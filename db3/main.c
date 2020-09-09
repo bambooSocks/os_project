@@ -1,10 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "linkedlist.h"
 
 
 
-typedef struct ll_node {
-    int value;
-    struct ll_node next;
-} linked_list;
+int main() {
+    
 
+    return 0;
+}
 
 
