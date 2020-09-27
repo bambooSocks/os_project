@@ -3,3 +3,7 @@
 app
 app.o
 
+
+*.o
+
+db3/main
