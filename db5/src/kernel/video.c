@@ -11,15 +11,15 @@
 
 /*! Max number of columns in the VGA buffer. */
 #define MAX_COLS                (80)
-/*! Max number of columns in the VGA buffer. */
+/*! Max number of rows in the VGA buffer. */
 #define MAX_ROWS                (25)
 
 struct screen_position
 {
  unsigned char character; /*!< The character part of the byte tuple used for
                                each screen position. */
- unsigned char attribute; /*!< The character part of the byte tuple used for
-                               each screen position. */
+ unsigned char attribute; /*!< The attribute part of the byte tuple used for
+                               each screen position. i.e. background and foreground color */
 };
 /*!< Defines a VGA text mode screen position. */
 
@@ -34,10 +34,18 @@ struct screen
 static struct screen* const
 screen_pointer = (struct screen*) 0xB8000;
 
+int currentRow = 0;
+int currentColumn = 0;
+
 void
 kprints(const char* string)
 {
- /* Implement me! */
+  while (*string != 0) {
+    struct screen_position character = {*string, 0};
+    screen_pointer->positions[currentRow][currentColumn] = character;
+    currentColumn++;
+    string++;
+  }
 }
 
 void
