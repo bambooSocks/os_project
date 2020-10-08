@@ -1,4 +1,5 @@
 #include "linkedlist.h"
+#include "io.h"
 
 // Linked lists have to be created using the function in order to ensure that they
 // are intitialzied correctly
@@ -29,7 +30,8 @@ LL_RETURN_t pushToLL(linked_list_t* ll, int value) {
     // allocate space for new node that the last_node will point to
     *last_node = (ll_node_t*) malloc(sizeof(ll_node_t));
     if (*last_node == NULL) {
-        printf("Couldn't allocate memory for new node\n");
+        char *msg = "Couldn't allocate memory for new node\n";
+        syscall_write(msg, strlen(msg));
         return LL_ALLOCATION_ERROR;
     }
 
@@ -76,13 +78,14 @@ LL_RETURN_t popFromLL(linked_list_t* ll, int* ret_val) {
 void printLL(linked_list_t* ll) {
     ll_node_t* last_node = ll->data;
     if (last_node != NULL) {
-        printf("%d", last_node->value);
+        write_int(last_node->value);
         while (last_node->next != NULL) {
             last_node = last_node->next;
-            printf(", %d", last_node->value);
+            syscall_write(", ", 2);
+            write_int(last_node->value);
         }
     }
-    printf("\n");
+    syscall_write("\n", 1);
 }
 
 

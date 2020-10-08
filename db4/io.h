@@ -19,5 +19,6 @@ int syscall_read(char *dest, int len);
 int write_char(char c);
 
 int syscall_write(char *dest, int len);
+int write_int(int i);
 
 #endif /* IO_H_ */

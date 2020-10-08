@@ -1,5 +1,8 @@
 #include "io.h"
 
+#define MAX_DIGITS_INT32  10
+
+
 int syscall_read(char *dest, int len) {
 
 	// At -O3 GCC was optimizing dest and len away.
@@ -52,3 +55,39 @@ int syscall_write(char *data, int len) {
 int write_char(char c) {
 	return (syscall_write(&c, 1) == 1);
 }
+#include <stdio.h>
+int write_int(int i) {
+    char digits[MAX_DIGITS_INT32] = {0};
+
+    int iterate_over = i;
+    for (int d = MAX_DIGITS_INT32 - 1; d > 0; d--) {
+        digits[d] = iterate_over % 10;
+        iterate_over /= 10;
+    }
+    
+    int written = 0;
+
+    if (i < 0) {
+        if (!write_char('-')) {
+            return 0;
+        }
+        written++;
+        i *= -1;
+    }    
+
+    int found_non_zero = 0;
+
+    for (int d = 0; d < MAX_DIGITS_INT32; d++) {
+        if (found_non_zero || digits[d] != 0) {
+            found_non_zero = 1;
+            printf("\n  %d\n", digits[d]);
+            if (!write_char('0' + digits[d])) {
+                return written;
+            }
+            written++;
+        }
+    }
+
+    return written;
+}
+
