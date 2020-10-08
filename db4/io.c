@@ -60,7 +60,7 @@ int write_char(char c) {
 int write_NTS(char *s) {
 	int len = 0;
 	char *p = s;
-	while (p != 0) { p++; len++; }
+	while (*p != 0) { p++; len++; }
 	return syscall_write(s, len);
 }
 
@@ -85,9 +85,8 @@ int write_int(int i) {
     int found_non_zero = 0;
 
     for (int d = 0; d < MAX_DIGITS_INT32; d++) {
-        if (found_non_zero || digits[d] != 0) {
+        if (found_non_zero || digits[d] != 0 || d == (MAX_DIGITS_INT32 - 1)) {
             found_non_zero = 1;
-            printf("\n  %d\n", digits[d]);
             if (!write_char('0' + digits[d])) {
                 return written;
             }
