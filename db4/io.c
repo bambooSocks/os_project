@@ -58,6 +58,15 @@ int write_char(char c) {
 #include <stdio.h>
 int write_int(int i) {
     char digits[MAX_DIGITS_INT32] = {0};
+    
+	int written = 0;
+    if (i < 0) {
+        if (!write_char('-')) {
+            return 0;
+        }
+        written++;
+        i *= -1;
+    }
 
     int iterate_over = i;
     for (int d = MAX_DIGITS_INT32 - 1; d > 0; d--) {
@@ -65,16 +74,6 @@ int write_int(int i) {
         iterate_over /= 10;
     }
     
-    int written = 0;
-
-    if (i < 0) {
-        if (!write_char('-')) {
-            return 0;
-        }
-        written++;
-        i *= -1;
-    }    
-
     int found_non_zero = 0;
 
     for (int d = 0; d < MAX_DIGITS_INT32; d++) {
