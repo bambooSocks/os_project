@@ -38,7 +38,7 @@ void handle_system_call(void)
   }
   case SYSCALL_PRINTS:
   {
-    char *string = current_thread->edi;
+    char *string = (char *) current_thread->edi;
     kprints(string);
     current_thread->eax = ALL_OK; 
   }
