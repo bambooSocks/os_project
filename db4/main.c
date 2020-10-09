@@ -8,10 +8,6 @@ int main() {
     linked_list_t *ll = newLL();
     int isRunning = 1;
 
-    int num = -10;
-    printf("\n%d\n", write_int(num));
-
-
     while (isRunning) {
         char ch;
         syscall_read(&ch, 1);

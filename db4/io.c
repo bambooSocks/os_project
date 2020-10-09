@@ -55,7 +55,15 @@ int syscall_write(char *data, int len) {
 int write_char(char c) {
 	return (syscall_write(&c, 1) == 1);
 }
-#include <stdio.h>
+
+// write NULL terminated string
+int write_NTS(char *s) {
+	int len = 0;
+	char *p = s;
+	while (p != 0) { p++; len++; }
+	return syscall_write(s, len);
+}
+
 int write_int(int i) {
     char digits[MAX_DIGITS_INT32] = {0};
     

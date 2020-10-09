@@ -4,7 +4,6 @@
 // are intitialzied correctly
 linked_list_t* newLL() {
     linked_list_t* ll = (linked_list_t*) malloc(sizeof(linked_list_t));
-    ll->size = 0;
     ll->data = NULL;
     return ll;
 }
@@ -41,6 +40,7 @@ LL_RETURN_t pushToLL(linked_list_t* ll, int value) {
 
 // Pops a value from the Linked list (ll) and puts it into passed variable
 // ret_val has to be an address to an existing integer variable 
+// where the poped integer is supposed to be written to
 // or NULL when it should be ignored
 // Returns LL_SUCCESS if the value was popped successfully
 // If the list is empty the function returns LL_OUT_OF_DATA_ERROR
@@ -59,16 +59,22 @@ LL_RETURN_t popFromLL(linked_list_t* ll, int* ret_val) {
         while ((*last_node)->next->next != NULL) {
             last_node = &((*last_node)->next);
         }
+
+        // write the value if the pointer is not NULL
+        if (ret_val != NULL)
+            *ret_val = (*last_node)->next->value;
+
+        // free the memory and remove reference to the node
+        free((*last_node)->next);
+        (*last_node)->next = NULL;
+    } else {
+        // The case when there is only one element in the list
+        free((*last_node));
+        // write the value if the pointer is not NULL
+        if (ret_val != NULL)
+            *ret_val = (*last_node)->value;
+        ll->data = NULL;
     }
-
-    // write the value if the pointer is not NULL
-    if (ret_val != NULL)
-        *ret_val = (*last_node)->next->value;
-
-    // free the memory and remove reference to the node
-    free((*last_node)->next);
-    (*last_node)->next = NULL;
-
     return LL_SUCCESS;
 }
 

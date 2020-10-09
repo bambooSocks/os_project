@@ -20,5 +20,6 @@ int write_char(char c);
 
 int syscall_write(char *dest, int len);
 int write_int(int i);
+int write_NTS(char *s);
 
 #endif /* IO_H_ */

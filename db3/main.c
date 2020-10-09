@@ -8,7 +8,7 @@ int main() {
     int isRunning = 1;
 
     while (isRunning) {
-        char ch = fgetc(stdin);
+        char ch = getchar();
         switch (ch) {
         case 'a':
             pushToLL(ll, counter);

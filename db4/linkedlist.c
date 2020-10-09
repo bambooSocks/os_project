@@ -5,7 +5,6 @@
 // are intitialzied correctly
 linked_list_t* newLL() {
     linked_list_t* ll = (linked_list_t*) malloc(sizeof(linked_list_t));
-    ll->size = 0;
     ll->data = NULL;
     return ll;
 }
@@ -30,8 +29,7 @@ LL_RETURN_t pushToLL(linked_list_t* ll, int value) {
     // allocate space for new node that the last_node will point to
     *last_node = (ll_node_t*) malloc(sizeof(ll_node_t));
     if (*last_node == NULL) {
-        char *msg = "Couldn't allocate memory for new node\n";
-        syscall_write(msg, strlen(msg));
+        write_NTS("Couldn't allocate memory for new node\n");
         return LL_ALLOCATION_ERROR;
     }
 
@@ -61,16 +59,22 @@ LL_RETURN_t popFromLL(linked_list_t* ll, int* ret_val) {
         while ((*last_node)->next->next != NULL) {
             last_node = &((*last_node)->next);
         }
+
+        // write the value if the pointer is not NULL
+        if (ret_val != NULL)
+            *ret_val = (*last_node)->next->value;
+
+        // free the memory and remove reference to the node
+        free((*last_node)->next);
+        (*last_node)->next = NULL;
+    } else {
+        // The case when there is only one element in the list
+        free((*last_node));
+        // write the value if the pointer is not NULL
+        if (ret_val != NULL)
+            *ret_val = (*last_node)->value;
+        ll->data = NULL;
     }
-
-    // write the value if the pointer is not NULL
-    if (ret_val != NULL)
-        *ret_val = (*last_node)->next->value;
-
-    // free the memory and remove reference to the node
-    free((*last_node)->next);
-    (*last_node)->next = NULL;
-
     return LL_SUCCESS;
 }
 
@@ -81,11 +85,11 @@ void printLL(linked_list_t* ll) {
         write_int(last_node->value);
         while (last_node->next != NULL) {
             last_node = last_node->next;
-            syscall_write(", ", 2);
+            write_NTS(", ");
             write_int(last_node->value);
         }
     }
-    syscall_write("\n", 1);
+    write_NTS("\n");
 }
 
 

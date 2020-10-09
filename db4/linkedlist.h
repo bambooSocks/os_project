@@ -10,7 +10,6 @@ typedef struct ll_node {
 } ll_node_t;
 
 typedef struct {
-    int size;
     ll_node_t* data;
 } linked_list_t;
 
