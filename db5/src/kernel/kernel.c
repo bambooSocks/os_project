@@ -98,6 +98,8 @@ void kernel_init(register uint32_t* const multiboot_information
  }
 
  kprints("The kernel has booted!\n");
+ kprinthex(0);
+ kprints("\n");
  kprinthex(15);
  kprints("\n");
  kprinthex(16000);

@@ -43,6 +43,7 @@ kprints(const char* string)
   while (*string != 0) {
     if (*string == '\n') {
       currentRow++;
+      currentColumn = 0;
     } else {
       struct screen_position character = {*string, 0x0F};
       screen_pointer->positions[currentRow][currentColumn] = character;
@@ -68,7 +69,7 @@ kprinthexdigit(uint32_t digit) {
 void
 kprinthex(const register uint32_t value)
 {
-  char output[4] = {0};
+  uint32_t output[4] = {0};
   uint32_t decimal = value;
 
   if (decimal == 0) {
@@ -83,7 +84,7 @@ kprinthex(const register uint32_t value)
     hex_digit_count++;
   }
 
-  for (int i = hex_digit_count; i < 0; i--) {
-    kprinthexdigit(output[i]);
+  for (int i = hex_digit_count; i > 0; i--) {
+    kprinthexdigit(output[i-1]);
   }
 }
