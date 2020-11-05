@@ -98,6 +98,10 @@ void kernel_init(register uint32_t* const multiboot_information
  }
 
  kprints("The kernel has booted!\n");
+ kprinthex(15);
+ kprints("\n");
+ kprinthex(16000);
+ kprints("\n");
 
  /* Halt as we cannot do anything more right now. */ 
  halt_the_machine();

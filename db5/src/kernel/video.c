@@ -58,7 +58,7 @@ kprinthexdigit(uint32_t digit) {
   if (digit >= 0 && digit <=9 ) {
     output[0] = '0' + digit;
   } else if (digit >= 10 && digit <= 15) {
-    output[0] = 'A' + (digit - 10)
+    output[0] = 'A' + (digit - 10);
   } else {
     return;
   }
@@ -76,10 +76,11 @@ kprinthex(const register uint32_t value)
     return;
   }
   
-  uint8_t hex_digit_count = 4;
+  uint8_t hex_digit_count = 0;
   while (decimal != 0) {
-    kprinthexdigit(decimal % 16);
+    output[hex_digit_count] = decimal % 16;
     decimal /= 16;
-    hex_digit_count--;
+    hex_digit_count++;
   }
+  kprinthexdigit(output + (4 - hex_digit_count));
 }
