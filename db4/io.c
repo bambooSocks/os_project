@@ -77,7 +77,7 @@ int write_int(int i) {
     }
 
     int iterate_over = i;
-    for (int d = MAX_DIGITS_INT32 - 1; d > 0; d--) {
+    for (int d = MAX_DIGITS_INT32 - 1; d > 0 && iterate_over != 0; d--) {
         digits[d] = iterate_over % 10;
         iterate_over /= 10;
     }
