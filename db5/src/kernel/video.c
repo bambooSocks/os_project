@@ -68,7 +68,7 @@ kprinthexdigit(uint32_t digit) {
 void
 kprinthex(const register uint32_t value)
 {
-  char output[5] = {0};
+  char output[4] = {0};
   uint32_t decimal = value;
 
   if (decimal == 0) {
@@ -82,5 +82,8 @@ kprinthex(const register uint32_t value)
     decimal /= 16;
     hex_digit_count++;
   }
-  kprinthexdigit(output + (4 - hex_digit_count));
+
+  for (int i = hex_digit_count; i < 0; i--) {
+    kprinthexdigit(output[i]);
+  }
 }
