@@ -77,7 +77,8 @@ void handle_system_call(void)
         break;
       }
     }
-    current_thread->eax = foundProcess ? ALL_OK : ERROR; 
+    current_thread->eax = foundProcess ? ALL_OK : ERROR;
+    kprints("Create process\n");
   }
   case SYSCALL_YIELD:
   {
@@ -94,6 +95,7 @@ void handle_system_call(void)
       }
     }
     current_thread->eax = ALL_OK;
+    kprints("Yield\n");
   }
 
   default:
