@@ -69,6 +69,7 @@ kprinthexdigit(uint32_t digit) {
 void
 kprinthex(const register uint32_t value)
 {
+  kprints("skurvenina\n")
   uint32_t output[4] = {0};
   uint32_t decimal = value;
 
