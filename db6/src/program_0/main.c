@@ -3,6 +3,7 @@
 int
 main(int argc, char* argv[])
 {
+ printhex(11);
  if (0 != createprocess(1))
  {
   prints("createprocess of program 1 failed.\n");
