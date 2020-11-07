@@ -84,6 +84,7 @@ void handle_system_call(void)
         processes[i].number_of_threads = 1;
         processes[i].used = 1;
         threads[threadIdx].process = &(processes[i]);
+        threads[threadIdx].used = 1;
         foundProcess = 1;
         break;
       }
@@ -93,7 +94,6 @@ void handle_system_call(void)
   }
   case SYSCALL_YIELD:
   {
-    kprints("yield\n");
     int foundNextThread = 0;
     int nextThreadIdx = lastThreadIdx + 1;
     while (!foundNextThread) {
@@ -108,7 +108,6 @@ void handle_system_call(void)
       nextThreadIdx++;
     }
     current_thread->eax = ALL_OK;
-    kprints("Yield\n");
     break;
   }
 
