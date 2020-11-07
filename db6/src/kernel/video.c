@@ -44,8 +44,18 @@ kprints(const char* string)
     if (*string == '\n') {
       currentRow++;
       currentColumn = 0;
+      if (currentRow >= MAX_ROWS) {
+        currentRow = 0;
+      }
     } else {
       struct screen_position character = {*string, 0x0F};
+      if (currentColumn >= MAX_COLS) {
+        currentRow++;
+        currentColumn = 0;
+        if (currentRow >= MAX_ROWS) {
+          currentRow = 0;
+        }
+      }
       screen_pointer->positions[currentRow][currentColumn] = character;
       currentColumn++;
     }
