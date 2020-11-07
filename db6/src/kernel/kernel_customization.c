@@ -62,42 +62,31 @@ void handle_system_call(void)
   }
   case SYSCALL_CREATEPROCESS:
   {
-    kprinthex(10);
     uint32_t program = current_thread->edi;
     uint8_t foundProcess = 0;
-    for (uint8_t i = 0; i < MAX_PROCESSES; i++) {
-      if (!processes[i].used)
-      {
-        int threadIdx = -1;
-        for (uint8_t j = 0; j < MAX_THREADS; j++) {
-          if (!threads[j].used) {
-            threadIdx = j;
-            break;
-          }
-        }
-        if (threadIdx == -1) {
-          current_thread->eax = ERROR;
-          return;
-        }
-        threads[threadIdx].eip = executable_table[program];
-        processes[i].number_of_threads = 1;
-        processes[i].used = 1;
-        threads[threadIdx].process = &(processes[i]);
-        foundProcess = 1;
-        break;
-      }
-    }
+    // for (uint8_t i = 0; i < MAX_PROCESSES; i++) {
+    //   if (!processes[i].used)
+    //   {
+    //     int threadIdx = -1;
+    //     for (uint8_t j = 0; j < MAX_THREADS; j++) {
+    //       if (!threads[j].used) {
+    //         threadIdx = j;
+    //         break;
+    //       }
+    //     }
+    //     if (threadIdx == -1) {
+    //       current_thread->eax = ERROR;
+    //       return;
+    //     }
+    //     threads[threadIdx].eip = executable_table[program];
+    //     processes[i].number_of_threads = 1;
+    //     processes[i].used = 1;
+    //     threads[threadIdx].process = &(processes[i]);
+    //     foundProcess = 1;
+    //     break;
+    //   }
+    // }
     current_thread->eax = foundProcess ? ALL_OK : ERROR;
-    kprinthex((uint32_t) foundProcess);
-    kprints("\n");
-    kprints("Create process\n");
-    int count = 0;
-    for (int i = 0; i < MAX_PROCESSES; i++) {
-      if (processes[i].used) {
-        count ++;
-      }
-    }
-    kprinthex((uint32_t) count);
   }
   case SYSCALL_YIELD:
   {
