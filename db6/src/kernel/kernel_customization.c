@@ -62,7 +62,7 @@ void handle_system_call(void)
   }
   case SYSCALL_CREATEPROCESS:
   {
-    uint32_t program = current_thread->edi;
+    // uint32_t program = current_thread->edi;
     uint8_t foundProcess = 0;
     // for (uint8_t i = 0; i < MAX_PROCESSES; i++) {
     //   if (!processes[i].used)
