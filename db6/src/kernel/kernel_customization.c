@@ -117,11 +117,15 @@ void handle_system_call(void)
     if (current_thread->process->number_of_threads == 0) {
       current_thread->process->used = 0;
     }
+    current_thread = 0;
     for (int i = 0; i < MAX_THREADS; i++) {
       if (threads[i].used) {
         current_thread = &(threads[i]);
         break;
       }
+    }
+    if (current_thread == 0) {
+      kprints("SYSTEM TERM\n");
     }
     break;
   }
