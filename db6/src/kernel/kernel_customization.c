@@ -93,6 +93,7 @@ void handle_system_call(void)
   }
   case SYSCALL_YIELD:
   {
+    kprints("yield\n");
     int foundNextThread = 0;
     int nextThreadIdx = lastThreadIdx + 1;
     while (!foundNextThread) {
