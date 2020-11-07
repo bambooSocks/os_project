@@ -27,6 +27,7 @@ struct thread
  /*!< owning process of this thread. */
  struct thread*  next;
  /*!< can be used to implement linked lists of threads. */
+ int used;
 
  /* Add more members here if you need. */
 };
@@ -36,6 +37,7 @@ struct process
 {
  int number_of_threads;
  /*!< the number of threads this process owns. */
+ int used;
 
  /* Add more members here if you need. */
 };

@@ -14,6 +14,8 @@
 
 #include "kernel.h"
 
+int lastThreadIdx = 0;
+
 void kernel_late_init(void)
 {
  /* Set up the first thread. For now we do not set up a process. That is
@@ -21,6 +23,7 @@ void kernel_late_init(void)
  threads[0].eip = executable_table[0];
 
  processes[0].number_of_threads = 1;
+ processes[0].used = 1;
  threads[0].process = &(processes[0]);
  
  /* Go to user space. */
@@ -47,6 +50,50 @@ void handle_system_call(void)
     uint32_t value = current_thread->edi;
     kprinthex(value);
     current_thread->eax = ALL_OK; 
+  }
+  case SYSCALL_CREATEPROCESS:
+  {
+    uint32_t program = current_thread->edi;
+    uint8_t foundProcess = 0;
+    for (uint8_t i = 0; i < MAX_PROCESSES; i++) {
+      if (!processes[i].used)
+      {
+        int threadIdx = -1;
+        for (uint8_t j = 0; j < MAX_THREADS; j++) {
+          if (!threads[j].used) {
+            threadIdx = j;
+            break;
+          }
+        }
+        if (threadIdx == -1) {
+          current_thread->eax = ERROR;
+          return;
+        }
+        threads[threadIdx].eip = executable_table[program];
+        processes[i].number_of_threads = 1;
+        processes[i].used = 1;
+        threads[threadIdx].process = &(processes[i]);
+        foundProcess = 1;
+        break;
+      }
+    }
+    current_thread->eax = foundProcess ? ALL_OK : ERROR; 
+  }
+  case SYSCALL_YIELD:
+  {
+    int foundNextThread = 0;
+    int nextThreadIdx = lastThreadIdx + 1;
+    while (!foundNextThread) {
+      if (nextThreadIdx >= MAX_THREADS) {
+        nextThreadIdx = 0;
+      }
+      if (threads[nextThreadIdx].used) {
+        current_thread = &(threads[nextThreadIdx]);
+        lastThreadIdx = nextThreadIdx;
+        foundNextThread = 1;
+      }
+    }
+    current_thread->eax = ALL_OK;
   }
 
   default:
