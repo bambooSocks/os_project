@@ -20,11 +20,20 @@ void kernel_late_init(void)
 {
  /* Set up the first thread. For now we do not set up a process. That is
    for you to do later. */
+ for (int i = 0; i < MAX_THREADS; i++) {
+   threads[i].used = 0;
+ }
+ 
+ for (int i = 0; i < MAX_PROCESSES; i++) {
+   processes[i].used = 0;
+ }
+
  threads[0].eip = executable_table[0];
 
  processes[0].number_of_threads = 1;
  processes[0].used = 1;
  threads[0].process = &(processes[0]);
+ threads[0].used = 1;
  
  /* Go to user space. */
  go_to_user_space();
