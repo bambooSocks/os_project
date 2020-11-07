@@ -110,6 +110,21 @@ void handle_system_call(void)
     current_thread->eax = ALL_OK;
     break;
   }
+  case SYSCALL_TERMINATE:
+  {
+    current_thread->used = 0;
+    current_thread->process->number_of_threads--;
+    if (current_thread->process->number_of_threads == 0) {
+      current_thread->process->used = 0;
+    }
+    for (int i = 0; i < MAX_THREADS; i++) {
+      if (threads[i].used) {
+        current_thread = &(threads[i]);
+        break;
+      }
+    }
+    break;
+  }
 
   default:
   {
