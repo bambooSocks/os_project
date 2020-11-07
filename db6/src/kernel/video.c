@@ -61,6 +61,7 @@ kprinthexdigit(uint32_t digit) {
   } else if (digit >= 10 && digit <= 15) {
     output[0] = 'A' + (digit - 10);
   } else {
+    kprints("zlyhal\n");
     return;
   }
   kprints(output);
@@ -87,5 +88,4 @@ kprinthex(const register uint32_t value)
   for (int i = hex_digit_count; i < 0; i--) {
     kprinthexdigit(output[i]);
   }
-  kprints("skurvenina\n");
 }
