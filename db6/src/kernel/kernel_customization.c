@@ -87,7 +87,7 @@ void handle_system_call(void)
       }
     }
     current_thread->eax = foundProcess ? ALL_OK : ERROR;
-    kprinthex(foundProcess);
+    kprinthex((uint32_t) foundProcess);
     kprints("\n");
     kprinthex(10);
     kprints("\n");
@@ -99,7 +99,7 @@ void handle_system_call(void)
       }
     }
     kprints("\n");
-    kprinthex(count);
+    kprinthex((uint32_t) count);
   }
   case SYSCALL_YIELD:
   {
