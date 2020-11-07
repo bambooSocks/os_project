@@ -52,13 +52,15 @@ void handle_system_call(void)
   {
     char *string = (char *) current_thread->edi;
     kprints(string);
-    current_thread->eax = ALL_OK; 
+    current_thread->eax = ALL_OK;
+    break;
   }
   case SYSCALL_PRINTHEX:
   {
     uint32_t value = current_thread->edi;
     kprinthex(value);
-    current_thread->eax = ALL_OK; 
+    current_thread->eax = ALL_OK;
+    break; 
   }
   case SYSCALL_CREATEPROCESS:
   {
@@ -87,6 +89,7 @@ void handle_system_call(void)
     //   }
     // }
     current_thread->eax = foundProcess ? ALL_OK : ERROR;
+    break;
   }
   case SYSCALL_YIELD:
   {
@@ -104,6 +107,7 @@ void handle_system_call(void)
     }
     current_thread->eax = ALL_OK;
     kprints("Yield\n");
+    break;
   }
 
   default:
