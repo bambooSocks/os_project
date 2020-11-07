@@ -88,6 +88,7 @@ void handle_system_call(void)
     }
     current_thread->eax = foundProcess ? ALL_OK : ERROR;
     kprinthex(foundProcess);
+    kprints("\n");
     kprints("Create process\n");
     int count = 0;
     for (int i = 0; i < MAX_PROCESSES; i++) {
@@ -95,6 +96,7 @@ void handle_system_call(void)
         count ++;
       }
     }
+    kprints("\n");
     kprinthex(count);
   }
   case SYSCALL_YIELD:
