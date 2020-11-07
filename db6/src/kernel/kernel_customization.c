@@ -105,6 +105,7 @@ void handle_system_call(void)
         lastThreadIdx = nextThreadIdx;
         foundNextThread = 1;
       }
+      nextThreadIdx++;
     }
     current_thread->eax = ALL_OK;
     kprints("Yield\n");
