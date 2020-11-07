@@ -58,8 +58,10 @@ kprinthexdigit(uint32_t digit) {
   char output[2] = {0};
   if (digit >= 0 && digit <=9 ) {
     output[0] = '0' + digit;
+    kprints("number");
   } else if (digit >= 10 && digit <= 15) {
     output[0] = 'A' + (digit - 10);
+    kprints("letter");
   } else {
     kprints("zlyhal\n");
     return;
