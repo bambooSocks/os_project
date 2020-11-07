@@ -9,15 +9,16 @@ main(int argc, char* argv[])
   return 1;
  }
  
- if (0 != createprocess(2))
- {
-  prints("createprocess of program 2 failed.\n");
-  return 1;
- }
- 
  while(1)
  {
   prints("Ping\n");
+
+  if (0 != createprocess(2))
+  {
+    prints("createprocess of program 2 failed.\n");
+    return 1;
+  }
+
   yield();
  }
 
