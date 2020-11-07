@@ -121,6 +121,7 @@ void handle_system_call(void)
     for (int i = 0; i < MAX_THREADS; i++) {
       if (threads[i].used) {
         current_thread = &(threads[i]);
+        lastThreadIdx = i;
         break;
       }
     }
