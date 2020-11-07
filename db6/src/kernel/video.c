@@ -84,7 +84,7 @@ kprinthex(const register uint32_t value)
     hex_digit_count++;
   }
 
-  for (int i = hex_digit_count; i > 0; i--) {
+  for (int i = hex_digit_count - 1; i >= 0; i--) {
     kprinthexdigit(output[i]);
   }
 }
