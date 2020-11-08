@@ -126,14 +126,15 @@ void handle_system_call(void)
       }
     }
     if (current_thread == 0) {
+      // no more threads to run
       kprints("SYSTEM TERM\n");
     }
     break;
   }
   case SYSCALL_CREATETHREAD:
   {
-    char *instruction_pointer = current_thread->edi;
-    char *stack_pointer = current_thread->esi;
+    uint32_t instruction_pointer = current_thread->edi;
+    uint32_t stack_pointer = current_thread->esi;
     int newThreadIdx = -1;
     for (int i = 0; i < MAX_THREADS; i++) {
       if (!threads[i].used) {
