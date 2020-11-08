@@ -152,7 +152,6 @@ void handle_system_call(void)
       threads[newThreadIdx].used = 1;
       current_thread->eax = ALL_OK;
     }
-
     break;
   }
 
