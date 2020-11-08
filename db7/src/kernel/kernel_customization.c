@@ -114,7 +114,7 @@ void handle_system_call(void)
   {
     current_thread->used = 0;
     current_thread->process->number_of_threads--;
-    if (current_thread->process->number_of_threads == 0) {
+    if (current_thread->process->number_of_threads <= 0) {
       current_thread->process->used = 0;
     }
     current_thread = 0;
