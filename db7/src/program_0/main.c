@@ -15,14 +15,16 @@ char thread_stack[4096];
 int 
 main(int argc, char* argv[])
 {
- if (ALL_OK != createthread(thread, thread_stack+4096))
- {
-  prints("createthread failed!\n");
-  return 1;
- }
 
- while(1)
+ while(1) {
+  if (ALL_OK != createthread(thread, thread_stack+4096))
+  {
+    prints("createthread failed!\n");
+    return 1;
+  }
+
   yield();
+ }
 
  return 0;
 }
